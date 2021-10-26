@@ -6,7 +6,7 @@
         <a class="post-link" href="<%= url_for(i.path) %>"></a>
         <h2 class="post-card-title"><%= i.title || "[无标题]" %></h2>
         <p class="post-card-content">
-          <%= truncate(strip_html(i.content), {length: theme.preview_limit || 64}).replace(/\n/g, " ") %>
+          <%= i.excerpt || truncate(strip_html(i.content), {length: theme.preview_limit || 64}).replace(/\n/g, " ") %>
         </p>
         <%- partial("post_info", {post: i}) %>
       </article>

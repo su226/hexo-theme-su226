@@ -113,11 +113,11 @@
       this.number.remove();
     },
     update() {
-      const viewHeight = document.documentElement.clientHeight;
       // for chrome 48 support
       const scrollTop = document.documentElement.scrollTop || window.scrollY;
       const pageBottom = this.content.clientHeight + this.content.offsetTop;
-      const percentage = Math.round(Math.min(scrollTop / (pageBottom - viewHeight), 1) * 100) + "%";
+      const viewBottom = pageBottom - document.documentElement.clientHeight;
+      const percentage = viewBottom <= 0 ? "100%" : Math.round(Math.min(scrollTop / viewBottom, 1) * 100) + "%";
       this.progress.style.width = percentage;
       this.number.textContent = percentage;
     }

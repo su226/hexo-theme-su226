@@ -8,9 +8,10 @@ Sorry for non-Chinese users, currently there's no i18n support.
 
 * Support old browsers including Internet Explorer 11 and Chrome 48. (Partial support, Chrome 49 for main website support)
 * Local search
-* Highlight.js with line number and copy button
+* [Highlight.js](https://hexo.io/docs/syntax-highlight#Highlight-js) with line number and copy button
 * Customizable sidebar and footer
 * Topmost posts
+* Supports [hexo-blog-encrypt](https://github.com/D0n9X1n/hexo-blog-encrypt)
 * [Giscus](https://giscus.app) comments (Chrome 71 at least)
 
 ## Installation

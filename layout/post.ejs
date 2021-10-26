@@ -29,7 +29,11 @@ scripts:
   </div>
   <div class="toc" id="toc">
     <a class="toc-header toc-link" href="#content"><%= page.title || "[无标题]" %></a>
-    <%- toc(page.content, {list_number: false}) %>
+    <% if (page.encrypt) { %>
+      <div class="toc-header">抱歉，加密文章暂不支持目录。</div>
+    <% } else { %>
+      <%- toc(page.content, {list_number: false}) %>
+    <% } %>
   </div>
   <div class="post-background">
     <div class="post-content container">
