@@ -1,0 +1,56 @@
+---
+layout: base
+styles:
+  - css/info
+  - css/post
+scripts:
+  - js/post
+---
+<%
+  function hash(s) {
+    let h = 0;
+    for (let i = 0; i < s.length; i++) {
+      h = Math.imul(31, h) + s.charCodeAt(i) | 0;
+    }
+    return h;
+  }
+  function mod(m, n) {
+    return ((m % n) + n) % n;
+  }
+  page.title = page.title || "[无标题]";
+  page.navbarColor = mod(hash(page.title), 16);
+%>
+<article class="post">
+  <div class="post-header bg-<%= page.navbarColor %>">
+    <div class="container">
+      <h1 class="post-title"><%= page.title %></h1>
+      <%- partial("part/post_info", {post: page}) %>
+    </div>
+  </div>
+  <div class="toc" id="toc">
+    <a class="toc-header toc-link" href="#content"><%= page.title || "[无标题]" %></a>
+    <%- toc(page.content, {list_number: false}) %>
+  </div>
+  <div class="post-background">
+    <div class="post-content container">
+      <%- page.content %>
+    </div>
+  </div>
+</article>
+<% if (theme.giscus) { %>
+  <div class="container giscus-wrap">
+    <script
+      id="giscus-script"
+      data-repo="<%= theme.giscus.repo %>"
+      data-repo-id="<%= theme.giscus.repo_id %>"
+      data-category="<%= theme.giscus.category %>"
+      data-category-id="<%= theme.giscus.category_id %>"
+      data-mapping="<%= theme.giscus.mapping ?? 'pathname' %>"
+      data-reactions-enabled="<%= theme.giscus.reactions ?? true ? 1 : 0 %>"
+      data-emit-metadata="<%= theme.giscus.emit_metadata ?? false ? 1 : 0 %>"
+      data-theme="light"
+      crossorigin="anonymous"
+      async
+    ></script>
+  </div>
+<% } %>

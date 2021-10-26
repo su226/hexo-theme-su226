@@ -1,0 +1,45 @@
+---
+layout: base
+styles:
+  - css/info
+  - css/archive
+  - css/search
+scripts:
+  - js/search
+---
+<% page.title = "搜索"; page.navbarColor = 4; %>
+<div class="post-header bg-4">
+  <div class="container">
+    <h1 class="post-title">搜索</h1>
+  </div>
+</div>
+<div class="container">
+  <div id="search-input-box">
+    <span id="search-icon" class="iconify" data-icon="mdi:magnify"></span>
+    <div id="search-pending">下载搜索索引中……</div>
+    <input id="search-input">
+    <button id="search-clear" class="btn-icon">
+      <span id="search-icon" class="iconify" data-icon="mdi:close"></span>
+    </button>
+  </div>
+  <div id="search-results-box">
+    <div id="search-empty">
+      <span class="iconify" data-icon="mdi:close"></span>
+      <div>空空如也</div>
+    </div>
+    <div id="search-results"></div>
+    <button id="search-more" class="waves-effect">加载更多</button>
+  </div>
+  <div class="filter">
+    <h2 class="page-title">归档</h2>
+    <%- list_archives() %>
+  </div>
+  <div class="filter">
+    <h2 class="page-title">分类</h2>
+    <%- list_categories() %>
+  </div>
+  <div class="filter">
+    <h2 class="page-title">标签</h2>
+    <%- list_tags() %>
+  </div>
+</div>

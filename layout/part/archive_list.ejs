@@ -1,0 +1,15 @@
+<% try { attrs = attrs } catch (e) { attrs = "" } %>
+<ul class="post-list" <%= attrs %>>
+  <% for (let i of posts.data) { %>
+    <li>
+      <article class="post-card">
+        <a class="post-link" href="<%= url_for(i.path) %>"></a>
+        <h2 class="post-card-title"><%= i.title || "[无标题]" %></h2>
+        <p class="post-card-content">
+          <%= truncate(strip_html(i.content), {length: theme.preview_limit || 64}).replace(/\n/g, " ") %>
+        </p>
+        <%- partial("post_info", {post: i}) %>
+      </article>
+    </li>
+  <% } %>
+</ul>

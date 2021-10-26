@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <title>Internal Page</title>
+</head>
+<body>
+  <%- partial("part/archive_list", {posts: page.posts, attrs: page.current === page.total ? "data-end" : ""}) %>
+</body>
+</html>

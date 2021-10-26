@@ -1,0 +1,26 @@
+---
+layout: base
+styles:
+  - css/archive
+  - css/info
+scripts:
+  - js/index
+---
+<% page.navbarColor = 5; %>
+<div class="post-header bg-5">
+  <div class="container">
+    <h1 class="post-title"><%- config.title %></h1>
+  </div>
+</div>
+<div class="container">
+  <%- page.content %>
+  <% if (theme.top_tag) { %>
+    <% let top = site.posts.filter(e => e.tags.some(t => t.name == theme.top_tag)).sort("-updated") %>
+    <% if (top.length != 0) { %>
+      <h1 class="page-title">置顶文章</h1>
+      <%- partial("part/archive_list", {posts: top}) %>
+    <% } %>
+  <% } %>
+  <h1 class="page-title">最近更新</h1>
+  <ul id="updated-list" class="post-list"></ul>
+</div>

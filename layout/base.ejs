@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width">
+  <title><%= page.title ? `${page.title} - ${config.title}` : config.title %></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  <%- css("css/base") %>
+  <% try {
+    styles = styles;
+  } catch (e) {
+    styles = [];
+  } %>
+  <% for (const i of styles) { %>
+    <%- css(i) %>
+  <% } %> 
+</head>
+
+<body>
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <% if (theme.avatar) { %>
+        <img class="sidebar-avatar" src="<%= theme.avatar %>">
+      <% } %>
+      <span class="sidebar-title"><%- config.title %></span>
+      <span class="sidebar-subtitle"><%- config.subtitle %> </span>
+      <button id="settings" class="btn-icon"><span class="iconify" data-icon="mdi:cog"></span></button>
+    </div>
+    <ul class="menu" id="menu">
+      <li class="menu-item">
+        <span class="menu-icon iconify" data-icon="mdi:home"></span>
+        <a class="menu-link" href="/">主页</a>
+      </li>
+      <li class="menu-item">
+        <span class="menu-icon iconify" data-icon="mdi:file-document"></span>
+        <a class="menu-link" href="/archives">文章</a>
+      </li>
+      <li class="menu-item">
+        <span class="menu-icon iconify" data-icon="mdi:magnify"></span>
+        <a class="menu-link" href="/search">搜索</a>
+      </li>
+      <% for (const item of theme.menu_items || []) { %>
+        <li class="menu-item">
+          <span class="menu-icon iconify" data-icon="<%= item.icon %>"></span>
+          <a class="menu-link" href="<%= item.href %>" <%- item.pjax === false ? 'data-pjax="skip"' : '' %>><%= item.name %></a>
+        </li>
+      <% } %>
+    </ul>
+  </nav>
+  <div class="navbar-fixed">
+    <nav class="navbar bg-<%- page.navbarColor %>">
+      <button class="btn-icon" id="toggle-menu"><span class="iconify" data-icon="mdi:menu"></span></button>
+      <div class="navbar-title"><%- page.title || config.title %></div>
+      <button class="btn-icon" id="back-to-top"><span class="iconify" data-icon="mdi:arrow-up"></span></button>
+    </nav>
+  </div>
+  <div id="content">
+    <%- body %>
+    <% if (theme.footer) { %>
+      <div id="footer"><%- theme.footer %></div>
+    <% } %>
+  </div>
+  <% const polyfills = encodeURIComponent([
+    // base.js
+    "Array.from",
+    "Array.prototype.@@iterator",
+    "document.currentScript",
+    "Promise",
+    "fetch",
+    "Element.prototype.replaceWith",
+    "Element.prototype.classList",
+    "Element.prototype.remove",
+    "window.scroll",
+    "CustomEvent",
+    // search.js
+    "Object.values",
+    "Object.entries"
+  ].join(',')); %>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=<%= polyfills %>"></script>
+  <script src="https://code.iconify.design/2/2.0.4/iconify.min.js" async></script>
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13.9"></script>
+  <%- js("js/base") %>
+  <% try {
+    scripts = scripts;
+  } catch (e) {
+    scripts = [];
+  } %>
+  <% for (const i of scripts) { %>
+    <%- js(i) %>
+  <% } %> 
+</body>
+
+</html>

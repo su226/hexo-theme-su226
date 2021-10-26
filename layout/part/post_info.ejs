@@ -1,0 +1,33 @@
+<div class="post-info">
+  <span class="iconify" data-icon="mdi:calendar"></span>
+  <ul class="post-date">
+    <li><a href="<%= url_for(`/archives/${post.date.format('Y')}`) %>"><%= post.date.format('Y') %></a></li>
+    <li><a href="<%= url_for(`/archives/${post.date.format('Y/MM')}`) %>"><%= post.date.format('M') %></a></li>
+    <li><%= post.date.format('D') %></li>
+  </ul>
+  <% if (!post.updated.isSame(post.date)) { %>
+    <span class="iconify" data-icon="mdi:calendar-plus"></span>
+    <ul class="post-date">
+      <li><%= post.updated.format('Y') %></li>
+      <li><%= post.updated.format('M') %></li>
+      <li><%= post.updated.format('D') %></li>
+    </ul>
+  <% } %>
+  <div class="post-info-wrap"></div>
+  <% if (post.categories.length !== 0) { %>
+    <span class="iconify" data-icon="mdi:folder"></span>
+    <ul class="post-categories">
+      <% for (let j of post.categories.data) { %>
+        <li><a href="<%= url_for(j.path) %>"><%= j.name %></a></li>
+      <% } %>
+    </ul>
+  <% } %>
+  <% if (post.tags.length !== 0) { %>
+    <span class="iconify" data-icon="mdi:tag"></span>
+    <ul class="post-tags">
+      <% for (let j of post.tags.data) { %>
+        <li><a class="chip" href="<%= url_for(j.path) %>"><%= j.name %></a></li>
+      <% } %>
+    </ul>
+  <% } %>
+</div>

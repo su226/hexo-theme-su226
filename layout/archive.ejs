@@ -1,0 +1,93 @@
+---
+layout: base
+styles:
+  - css/archive
+  - css/paginator
+  - css/info
+---
+<%
+  function hash(s) {
+    let h = 0;
+    for (let i = 0; i < s.length; i++) {
+      h = Math.imul(31, h) + s.charCodeAt(i) | 0;
+    }
+    return h;
+  }
+  function mod(m, n) {
+    return ((m % n) + n) % n;
+  }
+  if (page.category) {
+    page.title = `分类为 "${page.category}" 的文章`;
+  } else if (page.tag) {
+    page.title = `标签为 "${page.tag}" 的文章`
+  } else if (page.month) {
+    page.title = `${page.year} 年 ${page.month} 月的文章`
+  } else if (page.year) {
+    page.title = `${page.year} 年的文章`
+  } else {
+    page.title = "全部文章";
+  }
+  page.navbarColor = mod(hash(page.title), 16);
+%>
+<div class="post-header bg-<%= page.navbarColor %>">
+  <div class="container">
+    <h1 class="post-title"><%= page.title %></h1>
+  </div>
+</div>
+<div class="container">
+  <%- partial("part/archive_list", {
+    posts: page.posts
+  }) %>
+</div>
+<% const siblingsCount = 1, boundaryCount = 1; %>
+<% function pageLink(i) {
+  return url_for(i === 1 ? page.base : page.base + "page/" + i);
+} %>
+<% function generatePaginator(begin, end) { %>
+  <% for (let i = begin; i <= end; i++) { %>
+    <% if (i === page.current) { %>
+      <a class="paginator-item current" href="<%= pageLink(i) %>"><%= i %></a>
+    <% } else { %>
+      <a class="paginator-item" href="<%= pageLink(i) %>"><%= i %></a>
+    <% } %>
+  <% } %>
+<% } %>
+<div class="paginator">
+  <% if (page.current === 1) { %>
+    <span class="paginator-item disabled">
+      <span class="iconify" data-icon="mdi:chevron-left"></span>
+    </span>
+  <% } else { %>
+    <a class="paginator-item" href="<%- pageLink(page.prev) %>">
+      <span class="iconify" data-icon="mdi:chevron-left"></span>
+    </a>
+  <% } %>
+  <% const touchBegin = page.current <= siblingsCount + boundaryCount + 2; %>
+  <% const touchEnd = page.current >= page.total - boundaryCount - siblingsCount - 1; %>
+  <% if (touchBegin && touchEnd) { %>
+    <%- generatePaginator(1, page.total) %>
+  <% } else if (touchBegin) { %>
+    <%- generatePaginator(1, siblingsCount * 2 + boundaryCount + 2) %>
+    <span class="paginator-item">…</span>
+    <%- generatePaginator(page.total - boundaryCount + 1, page.total) %>
+  <% } else if (touchEnd) { %>
+    <%- generatePaginator(1, boundaryCount) %>
+    <span class="paginator-item">…</span>
+    <%- generatePaginator(page.total - boundaryCount - siblingsCount * 2 - 1, page.total) %>
+  <% } else { %>
+    <%- generatePaginator(1, boundaryCount) %>
+    <span class="paginator-item">…</span>
+    <%- generatePaginator(page.current - siblingsCount, page.current + siblingsCount) %>
+    <span class="paginator-item">…</span>
+    <%- generatePaginator(page.total - boundaryCount + 1, page.total) %>
+  <% } %>
+  <% if (page.current === page.total) { %>
+    <span class="paginator-item disabled">
+      <span class="iconify" data-icon="mdi:chevron-right"></span>
+    </span>
+  <% } else { %>
+    <a class="paginator-item" href="<%- pageLink(page.next) %>">
+      <span class="iconify" data-icon="mdi:chevron-right"></span>
+    </a>
+  <% } %>
+</div>
