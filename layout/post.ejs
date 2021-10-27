@@ -17,9 +17,14 @@ scripts:
   function mod(m, n) {
     return ((m % n) + n) % n;
   }
-  page.title = page.title || "[无标题]";
+  page.title = page.title || __('post.untitled');
   page.navbarColor = mod(hash(page.title), 16);
 %>
+<div id="i18n-data-post" class="i18n-data"
+  data-tab-menu="<%= __('post.tab-menu') %>"
+  data-tab-toc="<%= __('post.tab-toc') %>"
+  data-comment-unsupported="<%= __('post.comment-unsupported') %>"
+></div>
 <article class="post">
   <div class="post-header bg-<%= page.navbarColor %>">
     <div class="container">
@@ -28,9 +33,9 @@ scripts:
     </div>
   </div>
   <div class="toc" id="toc">
-    <a class="toc-header toc-link" href="#content"><%= page.title || "[无标题]" %></a>
+    <a class="toc-header toc-link" href="#content"><%= page.title %></a>
     <% if (page.encrypt) { %>
-      <div class="toc-header">抱歉，加密文章暂不支持目录。</div>
+      <div class="toc-header"><%= __('post.toc-unsupported') %></div>
     <% } else { %>
       <%- toc(page.content, {list_number: false}) %>
     <% } %>

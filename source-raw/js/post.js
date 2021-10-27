@@ -5,6 +5,7 @@
   const Toc = {
     script: scriptSrc,
     init(first) {
+      const i18n = document.querySelector("#i18n-data-post").dataset;
       this.toc = document.querySelector(".toc");
       this.toc.classList.add("tab-hidden");
       document.querySelector(".sidebar").appendChild(this.toc);
@@ -19,7 +20,7 @@
       this.menu = document.querySelector("#menu");
       const menuTab = document.createElement("div");
       menuTab.className = "tab-item waves-effect";
-      menuTab.textContent = "菜单";
+      menuTab.textContent = i18n.tabMenu;
       menuTab.addEventListener("click", () => {
         this.menu.classList.remove("tab-hidden");
         this.toc.classList.add("tab-hidden");
@@ -28,7 +29,7 @@
       });
       this.tab.appendChild(menuTab);
       const tocTab = document.createElement("div");
-      tocTab.textContent = "目录";
+      tocTab.textContent = i18n.tabToc;
       tocTab.className = "tab-item waves-effect";
       tocTab.addEventListener("click", () => {
         this.toc.classList.remove("tab-hidden");
@@ -134,7 +135,7 @@
       // If Intl.RelativeTimeFormat exists, Intl.PluralRules exists too.
       // If not, browser won't hang, but comments still unavailable.
       if (!Intl.RelativeTimeFormat) {
-        giscus.replaceWith("抱歉，你的浏览器太旧了，不支持评论区。（评论区至少需要 Chrome 71 / Firefox 65 / Edge 79）");
+        giscus.replaceWith(document.querySelector("#i18n-data-post").dataset.commentUnsupported);
         return;
       }
       if (document.body.classList.contains("dark")) {

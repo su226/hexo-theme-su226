@@ -477,6 +477,7 @@ a {
   background: none;
   color: #1976d2;
   transition: border-color .25s, background-color .25s;
+  text-transform: uppercase;
 }
 
 .settings-group button:hover {

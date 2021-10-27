@@ -1,0 +1,39 @@
+post:
+  untitled: "[Untitled]"
+  tab-menu: Menu
+  tab-toc: Contents
+  toc-unsupported: Sorry, currently table of contents is unsupported for encrypted article.
+  comment-unsupported: Sorry, your browser is too old to view comments. (Chrome 71, Firefox 65 or Edge 79 is required at least.)
+search:
+  title: Search
+  downloading: Downloading search index...
+  empty: Nothing here
+  more: Load more
+  archives: Archives
+  categories: Categories
+  tags: Tags
+index:
+  topmost: Topmost
+  recent: Recent Updated
+base:
+  menu-index: Home
+  menu-archives: Archives
+  menu-search: Search
+  settings-dark: Dark Mode
+  settings-serif: Serif Font
+  settings-justify: Justify Content
+  settings-font: Font Size
+  settings-font-small: Small
+  settings-font-medium: Medium
+  settings-font-large: Large
+  settings-width: Content Width
+  settings-width-narrow: Narrow
+  settings-width-medium: Medium
+  settings-width-wide: Wide
+  settings-width-fluid: Fullscreen
+archive:
+  category: Articles with Category "%s"
+  tag: Articles with Tag "%s"
+  month: Articles from %1$d/%2$d
+  year: Articles from %d
+  all: All Articles

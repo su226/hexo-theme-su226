@@ -17,15 +17,15 @@ styles:
     return ((m % n) + n) % n;
   }
   if (page.category) {
-    page.title = `分类为 "${page.category}" 的文章`;
+    page.title = __("archive.category", page.category);
   } else if (page.tag) {
-    page.title = `标签为 "${page.tag}" 的文章`
+    page.title = __("archive.tag", page.tag);
   } else if (page.month) {
-    page.title = `${page.year} 年 ${page.month} 月的文章`
+    page.title = __("archive.month", page.year, page.month);
   } else if (page.year) {
-    page.title = `${page.year} 年的文章`
+    page.title = __("archive.year", page.year);
   } else {
-    page.title = "全部文章";
+    page.title = __("archive.all");
   }
   page.navbarColor = mod(hash(page.title), 16);
 %>

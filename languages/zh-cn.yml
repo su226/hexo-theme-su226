@@ -1,0 +1,39 @@
+post:
+  untitled: "[无标题]"
+  tab-menu: 菜单
+  tab-toc: 目录
+  toc-unsupported: 抱歉，加密文章暂不支持目录。
+  comment-unsupported: 抱歉，你的浏览器太旧了，不支持评论区。（评论区至少需要 Chrome 71 / Firefox 65 / Edge 79）
+search:
+  title: 搜索
+  downloading: 下载搜索索引中……
+  empty: 空空如也
+  more: 加载更多
+  archives: 归档
+  categories: 分类
+  tags: 标签
+index:
+  topmost: 置顶文章
+  recent: 最近更新
+base:
+  menu-index: 主页
+  menu-archives: 文章
+  menu-search: 搜索
+  settings-dark: 夜间模式
+  settings-serif: 衬线字体
+  settings-justify: 两端对齐
+  settings-font: 字体大小
+  settings-font-small: 小
+  settings-font-medium: 中
+  settings-font-large: 大
+  settings-width: 内容宽度
+  settings-width-narrow: 窄
+  settings-width-medium: 中
+  settings-width-wide: 宽
+  settings-width-fluid: 全屏
+archive:
+  category: 分类为 "%s" 的文章
+  tag: 标签为 "%s" 的文章
+  month: "%1$d 年 %2$d 月的文章"
+  year: "%d 年的文章"
+  all: 全部文章

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cmn-Hans">
+<html lang="<%= config.lang %>">
 
 <head>
   <meta charset="UTF-8" name="viewport" content="width=device-width">
@@ -30,15 +30,15 @@
     <ul class="menu" id="menu">
       <li class="menu-item">
         <span class="menu-icon iconify" data-icon="mdi:home"></span>
-        <a class="menu-link" href="/">主页</a>
+        <a class="menu-link" href="/"><%= __("base.menu-index") %></a>
       </li>
       <li class="menu-item">
         <span class="menu-icon iconify" data-icon="mdi:file-document"></span>
-        <a class="menu-link" href="/archives">文章</a>
+        <a class="menu-link" href="/archives"><%= __("base.menu-archives") %></a>
       </li>
       <li class="menu-item">
         <span class="menu-icon iconify" data-icon="mdi:magnify"></span>
-        <a class="menu-link" href="/search">搜索</a>
+        <a class="menu-link" href="/search"><%= __("base.menu-search") %></a>
       </li>
       <% for (const item of theme.menu_items || []) { %>
         <li class="menu-item">
@@ -61,6 +61,37 @@
       <div id="footer"><%- theme.footer %></div>
     <% } %>
   </div>
+  <ul id="settings-dialog">
+    <li id="settings-dark" class="waves-effect">
+      <label><%= __("base.settings-dark") %></label>
+      <button class="settings-switch"></button>
+    </li>
+    <li id="settings-serif" class="waves-effect">
+      <label><%= __("base.settings-serif") %></label>
+      <button class="settings-switch"></button>
+    </li>
+    <li id="settings-justify" class="waves-effect">
+      <label><%= __("base.settings-justify") %></label>
+      <button class="settings-switch"></button>
+    </li>
+    <li>
+      <label><%= __("base.settings-font") %></label>
+      <div id="settings-size" class="settings-group">
+        <button class="waves-effect" data-value="0.8"><%= __("base.settings-font-small") %></button>
+        <button class="waves-effect" data-value="1"><%= __("base.settings-font-medium") %></button>
+        <button class="waves-effect" data-value="1.2"><%= __("base.settings-font-large") %></button>
+      </div>
+    </li>
+    <li>
+      <label><%= __("base.settings-width") %></label>
+      <div id="settings-width" class="settings-group">
+        <button class="waves-effect" data-value="768"><%= __("base.settings-width-narrow") %></button>
+        <button class="waves-effect" data-value="1024"><%= __("base.settings-width-medium") %></button>
+        <button class="waves-effect" data-value="1280"><%= __("base.settings-width-wide") %></button>
+        <button class="waves-effect" data-value="0"><%= __("base.settings-width-fluid") %></button>
+      </div>
+    </li>
+  </ul>
   <% const polyfills = encodeURIComponent([
     // base.js
     "Array.from",

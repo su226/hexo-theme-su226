@@ -2,7 +2,7 @@
 
 Yet another [Material Design](https://material.io) theme for [Hexo](https://hexo.io). Demo: [su226.tk](https://su226.tk)
 
-Sorry for non-Chinese users, currently there's no i18n support.
+Currently only Simplified Chinese and English are available. (Sorry for my poor English)
 
 ## Features
 

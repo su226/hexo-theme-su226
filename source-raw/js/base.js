@@ -297,8 +297,6 @@
       if (!first) {
         return;
       }
-      document.body.insertAdjacentHTML("beforeend", '<ul id="settings-dialog"><li id="settings-dark" class="waves-effect"><label>夜间模式</label><button class="settings-switch"></button></li><li id="settings-serif" class="waves-effect"><label>衬线字体</label><button class="settings-switch"></button></li><li id="settings-justify" class="waves-effect"><label>两端对齐</label><button class="settings-switch"></button></li><li><label>字体大小</label><div id="settings-size" class="settings-group"><button class="waves-effect" data-value="0.8">小</button><button class="waves-effect" data-value="1">中</button><button class="waves-effect" data-value="1.2">大</button></div></li><li><label>内容宽度</label><div id="settings-width" class="settings-group"><button class="waves-effect" data-value="768">窄</button><button class="waves-effect" data-value="1024">中</button><button class="waves-effect" data-value="1280">宽</button><button class="waves-effect" data-value="0">全屏</button></div></li></ul>');
-  
       for (const config of ["dark", "serif", "justify"]) {
         const item = document.querySelector(`#settings-${config}`);
         const button = item.querySelector("button");

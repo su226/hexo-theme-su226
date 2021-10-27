@@ -17,10 +17,10 @@ scripts:
   <% if (theme.top_tag) { %>
     <% let top = site.posts.filter(e => e.tags.some(t => t.name == theme.top_tag)).sort("-updated") %>
     <% if (top.length != 0) { %>
-      <h1 class="page-title">置顶文章</h1>
+      <h1 class="page-title"><%= __('index.topmost') %></h1>
       <%- partial("part/archive_list", {posts: top}) %>
     <% } %>
   <% } %>
-  <h1 class="page-title">最近更新</h1>
+  <h1 class="page-title"><%= __('index.recent') %></h1>
   <ul id="updated-list" class="post-list"></ul>
 </div>
