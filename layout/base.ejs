@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" name="viewport" content="width=device-width">
   <title><%= page.title ? `${page.title} - ${config.title}` : config.title %></title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  <%- css("css/normalize-8.0.1-min") %>
+  <%- css("css/waves-0.7.6-min") %>
   <%- css("css/base") %>
   <% try {
     styles = styles;
@@ -110,8 +110,8 @@
   ].join(',')); %>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=<%= polyfills %>"></script>
   <script src="https://code.iconify.design/2/2.0.4/iconify.min.js" async></script>
-  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13.9"></script>
+  <%- js("js/waves-0.7.6-min") %>
+  <%- js("js/regenerator-runtime-0.13.9-min") %>
   <%- js("js/base") %>
   <% try {
     scripts = scripts;
