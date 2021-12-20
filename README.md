@@ -88,4 +88,5 @@ theme_config:
     repo_id: "***omitted***"
     category: Announcements
     category_id: "***omitted***"
+    lang: zh-CN
 ```
