@@ -11,10 +11,6 @@
   overflow: hidden;
 }
 
-.dark .filter ul {
-  background: #1e1e1e;
-}
-
 .filter li {
   position: relative;
 }
@@ -53,11 +49,6 @@
     0px 1px 3px 0px rgba(0,0,0,0.12);
 }
 
-.dark #search-input-box {
-  background-color: #1e1e1e;
-  color: #fff;
-}
-
 #search-icon {
   width: 48px;
   height: 48px;
@@ -80,6 +71,7 @@
 }
 
 #search-input {
+  width: 0;
   height: 100%;
   flex-grow: 1;
   padding: 0;
@@ -87,10 +79,6 @@
   background: none;
   outline: none;
   color: inherit;
-}
-
-.dark #search-clear {
-  color: rgba(255,255,255,.56);
 }
 
 #search-empty {
@@ -139,4 +127,41 @@
 
 [data-search=incomplete] #search-more {
   display: block;
+}
+
+.scheme-dark .filter ul {
+  background: #1e1e1e;
+}
+
+.scheme-dark #search-input-box {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+.scheme-dark #search-clear {
+  color: rgba(255,255,255,.56);
+}
+
+@media (prefers-color-scheme: dark) {
+  .scheme-auto .filter ul {
+    background: #1e1e1e;
+  }
+  
+  .scheme-auto #search-input-box {
+    background-color: #1e1e1e;
+    color: #fff;
+  }
+  
+  .scheme-auto #search-clear {
+    color: rgba(255,255,255,.56);
+  }
+}
+
+.scheme-single .filter span {
+  background-color: #2196f3;
+}
+
+.scheme-sepia .filter ul,
+.scheme-sepia #search-input-box {
+  background-color: #f4ecd8;
 }

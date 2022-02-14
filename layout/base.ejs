@@ -4,22 +4,32 @@
 <head>
   <meta charset="UTF-8" name="viewport" content="width=device-width">
   <title><%= page.title ? `${page.title} - ${config.title}` : config.title %></title>
+  <% try {
+    og_meta = og_meta;
+  } catch (e) {
+    og_meta = false;
+  } %>
+  <%- meta_generator() %>
+  <% if (og_meta) { %>
+    <%- open_graph() %>
+  <% } %>
   <%- css("css/normalize-8.0.1-min") %>
   <%- css("css/waves-0.7.6-min") %>
   <%- css("css/base") %>
+  <%- css("css/colors") %>
   <% try {
     styles = styles;
   } catch (e) {
     styles = [];
   } %>
-  <% for (const i of styles) { %>
+  <% for (const i of styles.concat(page.styles ?? [])) { %>
     <%- css(i) %>
-  <% } %> 
+  <% } %>
 </head>
 
 <body>
   <nav class="sidebar">
-    <div class="sidebar-header">
+    <div class="sidebar-header color-<%= theme.sidebar_color ?? "blue" %>">
       <% if (theme.avatar) { %>
         <img class="sidebar-avatar" src="<%= theme.avatar %>">
       <% } %>
@@ -49,7 +59,7 @@
     </ul>
   </nav>
   <div class="navbar-fixed">
-    <nav class="navbar bg-<%- page.navbarColor %>">
+    <nav class="navbar color-<%- page.navbarColor %>">
       <button class="btn-icon" id="toggle-menu"><span class="iconify" data-icon="mdi:menu"></span></button>
       <div class="navbar-title"><%- page.title || config.title %></div>
       <button class="btn-icon" id="back-to-top"><span class="iconify" data-icon="mdi:arrow-up"></span></button>
@@ -62,33 +72,33 @@
     <% } %>
   </div>
   <ul id="settings-dialog">
-    <li id="settings-dark" class="waves-effect">
-      <label><%= __("base.settings-dark") %></label>
-      <button class="settings-switch"></button>
+    <li data-select="scheme" data-default="auto">
+      <button data-option="auto"><span class="iconify" data-icon="mdi:check"></span></button>
+      <button data-option="multi"><span class="iconify" data-icon="mdi:check"></span></button>
+      <button data-option="single"><span class="iconify" data-icon="mdi:check"></span></button>
+      <button data-option="sepia"><span class="iconify" data-icon="mdi:check"></span></button>
+      <button data-option="dark"><span class="iconify" data-icon="mdi:check"></span></button>
     </li>
-    <li id="settings-serif" class="waves-effect">
-      <label><%= __("base.settings-serif") %></label>
-      <button class="settings-switch"></button>
-    </li>
-    <li id="settings-justify" class="waves-effect">
-      <label><%= __("base.settings-justify") %></label>
-      <button class="settings-switch"></button>
+    <li data-select="font" data-default="sans">
+      <button data-option="sans">Aa</button>
+      <button data-option="serif">Aa</button>
+      <button data-option="mono">Aa</button>
     </li>
     <li>
-      <label><%= __("base.settings-font") %></label>
-      <div id="settings-size" class="settings-group">
-        <button class="waves-effect" data-value="0.8"><%= __("base.settings-font-small") %></button>
-        <button class="waves-effect" data-value="1"><%= __("base.settings-font-medium") %></button>
-        <button class="waves-effect" data-value="1.2"><%= __("base.settings-font-large") %></button>
+      <div data-adjust="size">
+        <button data-minus><span class="iconify" data-icon="mdi:minus"></span></button>
+        <div class="subgroup-label"><span class="iconify" data-icon="mdi:format-size"></span><span data-label></span></div>
+        <button data-plus><span class="iconify" data-icon="mdi:plus"></span></button>
       </div>
-    </li>
-    <li>
-      <label><%= __("base.settings-width") %></label>
-      <div id="settings-width" class="settings-group">
-        <button class="waves-effect" data-value="768"><%= __("base.settings-width-narrow") %></button>
-        <button class="waves-effect" data-value="1024"><%= __("base.settings-width-medium") %></button>
-        <button class="waves-effect" data-value="1280"><%= __("base.settings-width-wide") %></button>
-        <button class="waves-effect" data-value="0"><%= __("base.settings-width-fluid") %></button>
+      <div data-adjust="width">
+        <button data-minus><span class="iconify" data-icon="mdi:minus"></span></button>
+        <div class="subgroup-label"><span class="iconify" data-icon="mdi:arrow-left-right"></span><span data-label></span></div>
+        <button data-plus><span class="iconify" data-icon="mdi:plus"></span></button>
+      </div>
+      <div data-adjust="line">
+        <button data-minus><span class="iconify" data-icon="mdi:minus"></span></button>
+        <div class="subgroup-label"><span class="iconify" data-icon="mdi:arrow-expand-vertical"></span><span data-label></span></div>
+        <button data-plus><span class="iconify" data-icon="mdi:plus"></span></button>
       </div>
     </li>
   </ul>
@@ -118,7 +128,7 @@
   } catch (e) {
     scripts = [];
   } %>
-  <% for (const i of scripts) { %>
+  <% for (const i of scripts.concat(page.scripts ?? [])) { %>
     <%- js(i) %>
   <% } %> 
 </body>

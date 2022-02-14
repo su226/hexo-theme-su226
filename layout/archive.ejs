@@ -6,6 +6,27 @@ styles:
   - css/info
 ---
 <%
+  const colors = theme.colors ?? [
+    "red",
+    "pink",
+    "purple",
+    "deep-purple",
+    "indigo",
+    "blue",
+    "light-blue",
+    "cyan",
+    "teal",
+    "green",
+    "light-green",
+    "lime",
+    "yellow",
+    "amber",
+    "orange",
+    "deep-orange",
+    "brown",
+    "grey",
+    "blue-grey",
+  ];
   function hash(s) {
     let h = 0;
     for (let i = 0; i < s.length; i++) {
@@ -16,22 +37,38 @@ styles:
   function mod(m, n) {
     return ((m % n) + n) % n;
   }
+  let type = "all";
   if (page.category) {
+    type = "category";
     page.title = __("archive.category", page.category);
   } else if (page.tag) {
+    type = "tag";
     page.title = __("archive.tag", page.tag);
   } else if (page.month) {
+    type = "month";
     page.title = __("archive.month", page.year, page.month);
   } else if (page.year) {
+    type = "year";
     page.title = __("archive.year", page.year);
   } else {
     page.title = __("archive.all");
   }
-  page.navbarColor = mod(hash(page.title), 16);
+  let color = theme.post_color ?? "random";
+  if (color == "random") {
+    color = colors[mod(hash(page.title), colors.length)];
+  }
+  page.navbarColor = color;
+  let subtitle = theme.archive_subtitle;
+  if (typeof subtitle == "object") {
+    subtitle = subtitle[type];
+  }
 %>
-<div class="post-header bg-<%= page.navbarColor %>">
+<div class="post-header color-<%= page.navbarColor %>">
   <div class="container">
     <h1 class="post-title"><%= page.title %></h1>
+    <% if (subtitle) { %>
+      <div class="post-subtitle"><%= subtitle %></div>
+    <% } %>
   </div>
 </div>
 <div class="container">

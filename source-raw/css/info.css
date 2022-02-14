@@ -50,17 +50,8 @@
   transition: .25s box-shadow, .25s background-color;
 }
 
-.dark .post-card .chip {
-  background: #616161;
-  color: inherit;
-}
-
 .chip:hover {
   background: #cecece;
-}
-
-.dark .post-card .chip:hover {
-  background: #6d6d6d;
 }
 
 .post-info .chip {
@@ -81,5 +72,25 @@
 @media (max-width: 768px) {
   .post-info-wrap {
     display: block;
+  }
+}
+
+.scheme-dark .post-card .chip {
+  background: #616161;
+  color: inherit;
+}
+
+.scheme-dark .post-card .chip:hover {
+  background: #6d6d6d;
+}
+
+@media (prefers-color-scheme: dark) {
+  .scheme-auto .post-card .chip {
+    background: #616161;
+    color: inherit;
+  }
+
+  .scheme-auto .post-card .chip:hover {
+    background: #6d6d6d;
   }
 }

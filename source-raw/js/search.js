@@ -124,7 +124,13 @@
       }
   
       const contentParts = [];
+      const partWords = new Set();
       for (const [begin, end] of contentFound) {
+        const word = index.lowerContent.slice(begin, end);
+        if (partWords.has(word)) {
+          continue;
+        }
+        partWords.add(word);
         const previewBegin = begin - 10;
         const previewEnd = end + 10;
         let added = false;

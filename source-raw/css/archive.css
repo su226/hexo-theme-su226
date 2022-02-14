@@ -17,10 +17,6 @@
   overflow: hidden;
 }
 
-.dark .post-card {
-  background: #1e1e1e;
-}
-
 .post-link {
   position: absolute;
   z-index: 1;
@@ -42,6 +38,28 @@
   color: rgba(0,0,0,.54);
 }
 
-.dark .post-card-content {
+.scheme-dark .post-card {
+  background: #1e1e1e;
+}
+
+.scheme-dark .post-card-content {
   color: rgba(255,255,255,.54);
+}
+
+@media (prefers-color-scheme: dark) {
+  .scheme-auto .post-card {
+    background: #1e1e1e;
+  }
+  
+  .scheme-auto .post-card-content {
+    color: rgba(255,255,255,.54);
+  }
+}
+
+.scheme-sepia .post-card {
+  background-color: #f4ecd8;
+}
+
+.scheme-sepia .post-card-content {
+  color: rgb(91,70,54,.54);
 }

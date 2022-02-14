@@ -6,10 +6,13 @@ styles:
 scripts:
   - js/index
 ---
-<% page.navbarColor = 5; %>
-<div class="post-header bg-5">
+<% page.navbarColor = theme.index_color ?? "blue"; %>
+<div class="post-header color-<%= page.navbarColor %>">
   <div class="container">
     <h1 class="post-title"><%- config.title %></h1>
+    <% if (page.subtitle) { %>
+      <div class="post-subtitle"><%= page.subtitle %></div>
+    <% } %>
   </div>
 </div>
 <div class="container">

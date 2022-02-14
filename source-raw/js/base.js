@@ -72,6 +72,16 @@
       this.onhidden = () => {};
       this.onclick = () => {};
     }
+
+    static count = 0;
+
+    static init() {
+      const element = document.createElement("div");
+      element.style.overflowX = "scroll";
+      document.body.appendChild(element);
+      document.body.style.setProperty("--scrollbar-size", `${element.offsetHeight}px`);
+      element.remove();
+    }
   
     ensureElement() {
       if (this.element === null) {
@@ -82,6 +92,9 @@
         document.body.appendChild(this.element);
         Backdrop.count++;
         document.body.classList.add("no-overflow");
+        if (document.body.clientHeight > document.documentElement.clientHeight) {
+          document.body.classList.add("fix-overflow");
+        }
       }
     }
   
@@ -113,22 +126,21 @@
       }
       this.onhide();
       this.element.style.opacity = 0;
-      if (immediate) {
+      let doHide = () => {
         this.element.remove();
         this.element = null;
         if (--Backdrop.count === 0) {
           document.body.classList.remove("no-overflow");
+          document.body.classList.remove("fix-overflow");
         }
         this.onhidden();
+      };
+      if (immediate) {
+        doHide();
       } else if (this.hideTimer === -1) {
         this.hideTimer = setTimeout(() => {
-          this.element.remove();
-          this.element = null;
           this.hideTimer = -1;
-          if (--Backdrop.count === 0) {
-            document.body.classList.remove("no-overflow");
-          }
-          this.onhidden();
+          doHide();
         }, 250);
       }
     }
@@ -147,8 +159,6 @@
       }
     }
   }
-  
-  Backdrop.count = 0;
   
   function clamp(val, min, max) {
     return Math.min(Math.max(val, min), max);
@@ -174,6 +184,7 @@
       if (!first) {
         return;
       }
+      Backdrop.init();
       this.sidebar = document.querySelector(".sidebar");
       this.backdrop = new Backdrop();
       this.disabled = false;
@@ -289,6 +300,7 @@
       Waves.attach(".chip");
       Waves.attach(".filter a");
       Waves.attach("a.paginator-item");
+      Waves.attach("#settings-dialog button");
     }
   }
   
@@ -297,55 +309,98 @@
       if (!first) {
         return;
       }
-      for (const config of ["dark", "serif", "justify"]) {
-        const item = document.querySelector(`#settings-${config}`);
-        const button = item.querySelector("button");
-        if (localStorage.getItem(config) === "true") {
-          document.body.classList.add(config);
-          button.classList.add("active");
-        }
-  
-        item.addEventListener("click", () => {
-          const active = button.classList.toggle("active");
-          localStorage.setItem(config, active);
-          document.body.classList.toggle(config, active);
-          window.dispatchEvent(new CustomEvent("settingsChanged", {
-            detail: { key: config, value: active }
-          }));
-        });
-      }
-  
-      for (const [name, defaultValue, setFunc] of [
-        ["width", 1024, value => {
-          document.body.style.setProperty("--content-width", value === "0" ? "none" : `${value}px`);
-        }],
-        ["size", 1, value => {
-          document.body.style.setProperty("--font-size", `${value}em`);
-        }]
-      ]) {
-        if (localStorage.getItem(name) === null) {
-          localStorage.setItem(name, defaultValue);
-        }
-        const buttons = document.querySelector(`#settings-${name}`).children;
-        const value = localStorage.getItem(name);
-        setFunc(value);
-        let activeButton = buttons[0];
-        for (const button of buttons) {
-          if (value === button.dataset.value) {
-            button.classList.add("active");
-            activeButton = button;
+      // TODO
+      const defaults = {
+        size: [
+          2,
+          "12px",
+          "14px",
+          "16px",
+          "18px",
+          "20px",
+          "22px",
+          "24px",
+          "26px",
+          "28px",
+          "32px",
+          "40px",
+          "56px",
+          "72px",
+          "96px",
+          "128px",
+        ],
+        width: [
+          4,
+          "40em",
+          "45em",
+          "50em",
+          "55em",
+          "60em",
+          "65em",
+          "70em",
+          "75em",
+          "80em",
+        ],
+        line: [
+          3,
+          "1.0em",
+          "1.2em",
+          "1.4em",
+          "1.6em",
+          "1.8em",
+          "2.0em",
+          "2.2em",
+          "2.4em",
+          "2.6em",
+        ]
+      };
+      const settings = document.querySelector("#settings-dialog");
+      for (const select of settings.querySelectorAll("[data-select]")) {
+        const name = select.dataset.select;
+        const value = localStorage.getItem(name) || select.dataset.default;
+        let current = value;
+        let currentElem = null;
+        document.body.classList.add(name + "-" + current);
+        for (const option of select.children) {
+          if (option.dataset.option == current) {
+            currentElem = option;
+            currentElem.classList.add("active");
           }
-          button.addEventListener("click", () => {
-            setFunc(button.dataset.value);
-            localStorage.setItem(name, button.dataset.value);
-            activeButton.classList.remove("active");
-            button.classList.add("active");
-            activeButton = button;
+          option.addEventListener("click", () => {
+            currentElem?.classList.remove("active");
+            document.body.classList.remove(name + "-" + current);
+            current = option.dataset.option;
+            currentElem = option;
+            localStorage.setItem(name, current);
+            currentElem.classList.add("active");
+            document.body.classList.add(name + "-" + current);
           });
         }
       }
-  
-      const settings = document.querySelector("#settings-dialog");
+      for (const adjust of settings.querySelectorAll("[data-adjust]")) {
+        const name = adjust.dataset.adjust;
+        const [defaultId, ...values] = defaults[name];
+        const value = localStorage.getItem(name) || values[defaultId];
+        const label = adjust.querySelector("[data-label]");
+        let index = values.indexOf(value);
+        if (index == -1) {
+          index = defaultId;
+        }
+        label.textContent = index + 1;
+        document.body.style.setProperty("--" + name, values[index]);
+        adjust.querySelector("[data-minus]").addEventListener("click", () => {
+          index = Math.max(index - 1, 0);
+          label.textContent = index + 1;
+          localStorage.setItem(name, values[index]);
+          document.body.style.setProperty("--" + name, values[index]);
+        });
+        adjust.querySelector("[data-plus]").addEventListener("click", () => {
+          index = Math.min(index + 1, values.length - 1);
+          label.textContent = index + 1;
+          localStorage.setItem(name, values[index]);
+          document.body.style.setProperty("--" + name, values[index]);
+        });
+      }
   
       const backdrop = new Backdrop(299);
   
@@ -540,13 +595,23 @@
   window.addEventListener("popstate", () => {
     pjax(location.href);
   });
+
+  function findAnchor(elem) {
+    while (elem) {
+      if (elem.tagName == "A") {
+        return elem;
+      }
+      elem = elem.parentNode;
+    }
+    return null;
+  }
   
   window.addEventListener("click", e => {
     if (e.button !== 0 || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.defaultPrevented) {
       return;
     }
-    const elem = e.target;
-    if (elem.tagName !== "A" || location.protocol !== elem.protocol || location.host !== elem.host || !isSelf(elem) || elem.dataset.pjax === "skip") {
+    const elem = findAnchor(e.target);
+    if (!elem || location.protocol !== elem.protocol || location.host !== elem.host || !isSelf(elem) || elem.dataset.pjax === "skip") {
       return;
     }
     if (location.pathname === elem.pathname && elem.hash !== "") {

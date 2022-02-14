@@ -7,10 +7,13 @@ styles:
 scripts:
   - js/search
 ---
-<% page.title = __('search.title'); page.navbarColor = 4; %>
-<div class="post-header bg-4">
+<% page.title = __('search.title'); page.navbarColor = theme.search_color ?? "indigo"; %>
+<div class="post-header color-<%= page.navbarColor %>">
   <div class="container">
     <h1 class="post-title"><%= __('search.title') %></h1>
+    <% if (page.subtitle) { %>
+      <div class="post-subtitle"><%= page.subtitle %></div>
+    <% } %>
   </div>
 </div>
 <div class="container">

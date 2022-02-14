@@ -5,8 +5,30 @@ styles:
   - css/post
 scripts:
   - js/post
+og_meta: true
 ---
 <%
+  const colors = theme.colors ?? [
+    "red",
+    "pink",
+    "purple",
+    "deep-purple",
+    "indigo",
+    "blue",
+    "light-blue",
+    "cyan",
+    "teal",
+    "green",
+    "light-green",
+    "lime",
+    "yellow",
+    "amber",
+    "orange",
+    "deep-orange",
+    "brown",
+    "grey",
+    "blue-grey",
+  ];
   function hash(s) {
     let h = 0;
     for (let i = 0; i < s.length; i++) {
@@ -18,7 +40,11 @@ scripts:
     return ((m % n) + n) % n;
   }
   page.title = page.title || __('post.untitled');
-  page.navbarColor = mod(hash(page.title), 16);
+  let color = theme.post_color ?? "random";
+  if (color == "random") {
+    color = colors[mod(hash(page.title), colors.length)];
+  }
+  page.navbarColor = color;
 %>
 <div id="i18n-data-post" class="i18n-data"
   data-tab-menu="<%= __('post.tab-menu') %>"
@@ -26,9 +52,12 @@ scripts:
   data-comment-unsupported="<%= __('post.comment-unsupported') %>"
 ></div>
 <article class="post">
-  <div class="post-header bg-<%= page.navbarColor %>">
+  <div class="post-header color-<%= page.navbarColor %>">
     <div class="container">
       <h1 class="post-title"><%= page.title %></h1>
+      <% if (page.subtitle) { %>
+        <div class="post-subtitle"><%= page.subtitle %></div>
+      <% } %>
       <%- partial("part/post_info", {post: page}) %>
     </div>
   </div>
