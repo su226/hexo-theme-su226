@@ -374,7 +374,7 @@
             localStorage.setItem(name, current);
             currentElem.classList.add("active");
             document.body.classList.add(name + "-" + current);
-            window.dispatchEvent(new Event("settingsChanged", { key: name, value: current }));
+            window.dispatchEvent(new CustomEvent("settingsChanged", { detail: { key: name, value: current } }));
           });
         }
       }
@@ -394,14 +394,14 @@
           label.textContent = index + 1;
           localStorage.setItem(name, values[index]);
           document.body.style.setProperty("--" + name, values[index]);
-          window.dispatchEvent(new Event("settingsChanged", { key: name, value: values[index] }));
+          window.dispatchEvent(new CustomEvent("settingsChanged", { detail: { key: name, value: values[index] } }));
         });
         adjust.querySelector("[data-plus]").addEventListener("click", () => {
           index = Math.min(index + 1, values.length - 1);
           label.textContent = index + 1;
           localStorage.setItem(name, values[index]);
           document.body.style.setProperty("--" + name, values[index]);
-          window.dispatchEvent(new Event("settingsChanged", { key: name, value: values[index] }));
+          window.dispatchEvent(new CustomEvent("settingsChanged", { detail: { key: name, value: values[index] } }));
         });
       }
   
