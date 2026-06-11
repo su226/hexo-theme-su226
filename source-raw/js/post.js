@@ -153,9 +153,9 @@
       if (e.detail.key === "scheme") {
         let theme = "light";
         if (e.detail.value === "dark") {
-          giscus.dataset.theme = "dark";
+          theme = "dark";
         } else if (e.detail.value === "auto") {
-          giscus.dataset.theme = "preferred_color_scheme";
+          theme = "preferred_color_scheme";
         }
         document.querySelector(".giscus-frame").contentWindow.postMessage({
           giscus: { setConfig: { theme } }
