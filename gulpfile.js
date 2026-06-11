@@ -6,7 +6,7 @@ const terser = require("gulp-terser");
 
 function css() {
   return gulp.src("source-raw/css/*.css")
-    .pipe(autoprefixer())
+    .pipe(autoprefixer.default())
     .pipe(cleancss())
     .pipe(gulp.dest("source/css"));
 }

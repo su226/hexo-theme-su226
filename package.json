@@ -9,19 +9,19 @@
   "author": "su226",
   "license": "MIT",
   "devDependencies": {
-    "@babel/preset-env": "^7.16.7",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^8.0.0",
+    "@babel/preset-env": "^7.29.7",
+    "gulp": "^5.0.1",
+    "gulp-autoprefixer": "^10.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-terser": "^2.1.0"
   },
   "peerDependencies": {
-    "hexo-generator-archive": "^1.0.0",
-    "hexo-generator-category": "^1.0.0",
-    "hexo-generator-index": "^2.0.0",
-    "hexo-generator-searchdb": "^1.4.0",
-    "hexo-generator-tag": "^1.0.0",
+    "hexo-generator-archive": "^2.0.0",
+    "hexo-generator-category": "^2.0.0",
+    "hexo-generator-index": "^4.0.0",
+    "hexo-generator-searchdb": "^1.5.0",
+    "hexo-generator-tag": "^2.0.0",
     "hexo-renderer-ejs": "^2.0.0"
   }
 }
